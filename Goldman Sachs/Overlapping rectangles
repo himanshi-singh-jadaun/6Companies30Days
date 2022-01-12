@@ -1,1 +1,18 @@
-
+class Solution {
+  public:
+    int doOverlap(int L1[], int R1[], int L2[], int R2[]) {
+        // if one rectangle is present at the left of other rectangle 
+        if(L2[0] >R1[0] || L1[0]>R2[0])
+        {
+            return 0;
+        }
+        
+        //if one rectangle is preset at top of other rectangle
+        if(R1[1] >L2[1] || R2[1] > L1[1])
+        {
+            return 0;
+        }
+        return 1;
+        
+    }
+};
