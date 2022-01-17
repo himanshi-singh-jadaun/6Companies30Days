@@ -1,1 +1,70 @@
+--------------------------------------------------------dynamic programming ----------------------------------------------------------
+class Solution{
+public:	
+	// #define ull unsigned long long
+	/* Function to get the nth ugly number*/
+	ull getNthUglyNo(int n) {
+	    // code here
+	   ull dp[n];
+	   ull i2=0,i3=0,i5=0;
+	   ull nextmultipleof2=2;
+	   ull nextmultipleof3=3;
+	   ull nextmultipleof5=5;
+	   ull nextuglynumber=1;
+	   
+	   dp[0]=1;
+	   for(int i=1;i<n;i++)
+	   {
+	       nextuglynumber = min(nextmultipleof2 , min(nextmultipleof3, nextmultipleof5));
+	       dp[i]=nextuglynumber;
+	       
+	       if(nextuglynumber == nextmultipleof2)
+	       {
+	           i2=i2+1;
+	           nextmultipleof2 = dp[i2] * 2;
+	       }
+	       if(nextuglynumber == nextmultipleof3)
+	       {
+	           i3=i3+1;
+	           nextmultipleof3 = dp[i3] * 3;
+	       }
+	       if(nextuglynumber == nextmultipleof5)
+	       {
+	           i5=i5+1;
+	           nextmultipleof5 = dp[i5] * 5;
+	       }
+	   }
+	   return nextuglynumber;
+	}
+};
+
+
+
+---------------------------------------------------------------------using set ------------------------------------------------------------
+class Solution{
+public:	
+	// #define ull unsigned long long
+	/* Function to get the nth ugly number*/
+	ull getNthUglyNo(int n) {
+	    // code here
+	    if(n==1 || n==2 || n==3 || n==4 || n==5)
+	    {
+	        return n;
+	    }
+	    set<ull> s;
+	    s.insert(1);
+	    n--;
+	    while(n)
+	    {
+	        auto x= s.begin();
+	        ull t=*x;
+	        s.erase(x);
+	        s.insert(t*2);
+	        s.insert(t*3);
+	        s.insert(t*5);
+	        n--;
+	    }
+	    return *s.begin();
+	}
+};
 
