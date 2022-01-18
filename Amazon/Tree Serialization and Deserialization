@@ -1,1 +1,48 @@
+class Solution
+{
+    public:
+    //Function to serialize a tree and return a list containing nodes of tree.
+    void solveserialise(Node * root,vector<int>& v )
+    {
+        if(!root)
+        {
+            v.push_back(-1);
+            return ;
+        }
+        v.push_back(root->data);
+        solveserialise(root->left, v);
+        solveserialise(root->right, v);
+    }
+    vector<int> serialize(Node *root) 
+    {
+        //Your code here
+        vector<int> v;
+        solveserialise(root,v);
+        return v;
+    }
+    
+    //Function to deserialize a list and construct the tree.
+    Node * solveDe(vector<int>& A, int * index)
+    {
+       if(*index==A.size() || A[*index]==-1)
+       {
+           *index+=1;
+           return NULL;
+       }
+       Node * newNode= new Node (A[*index]);
+       *index+=1;
+       
+       newNode->left=solveDe(A,index);
+       newNode->right=solveDe(A,index);
+       
+       return newNode;
+    }
+    Node * deSerialize(vector<int> &A)
+    {
+       //Your code here
+       int index=0;
+       Node * root= solveDe(A, &index);
+       return root;
+    }
 
+};
