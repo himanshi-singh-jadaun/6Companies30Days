@@ -1,1 +1,148 @@
 
+---------------------------------------------------------------------Max Heap------------------------------------------------------------------------
+class Solution
+{
+  public:
+    //Function to find maximum of each subarray of size k.
+    vector <int> max_of_subarrays(int *arr, int n, int k)
+    {
+        // your code here
+         priority_queue< int> heap, drop;
+        for(int i = 0 ; i<k ; i++)
+        {
+            heap.push(arr[i]);
+            
+        }
+        vector<int> v ;
+        v.push_back(heap.top());
+        for(int i =k ; i<n; i++)
+        {
+            if(arr[i-k]==heap.top())
+            {
+                heap.pop();
+            }else{
+                drop.push(arr[i-k]);
+            }
+            
+            while(!drop.empty() && drop.top()==heap.top())
+            {
+                heap.pop();
+                drop.pop();
+            }
+            heap.push(arr[i]);
+            v.push_back(heap.top());
+        }
+        return v;
+    }
+};
+
+
+
+
+
+
+
+---------------------------------------------------------------------------deque---------------------------------------------------------------------
+class Solution
+{
+  public:
+    //Function to find maximum of each subarray of size k.
+    vector <int> max_of_subarrays(int *arr, int n, int k)
+    {
+        // your code here
+        vector<int>v;
+        deque<int>q;
+        int i;
+        for( i=0;i<k;i++)
+        {
+            while(!q.empty() && (arr[i]>=arr[q.back()]))
+            {
+                q.pop_back();
+            }
+            q.push_back(i);
+        }
+        for(;i<n;i++)
+        {
+            v.push_back(arr[q.front()]);
+            while(!q.empty() && q.front()<=i-k)
+            {
+                q.pop_front();
+            }
+             while(!q.empty() && (arr[i]>=arr[q.back()]))
+            {
+                q.pop_back();
+            }
+            q.push_back(i);
+            
+        }
+        v.push_back(arr[q.front()]);
+        q.pop_front();
+        return v;
+    }
+};
+
+
+
+
+----------------------------------------------------------------------max a max b max c----------------------------------------------------------------
+void printKMax(int *arr,int n,int k)
+{
+    int i,maxA=INT_MIN,maxB=INT_MIN,maxC=INT_MIN;
+    //base condition
+    //if no subarrays needs to be formed
+    if(k==1||k==n)
+    {
+        for(i=0;i<n;i++)
+        cout<<arr[i]<<" ";
+        return;
+    }
+    //traverse k elements to find
+    //find second and third largest elements
+    for(i=0;i<k;i++){
+        if(maxA<arr[i])
+        {
+            maxC=maxB;
+            maxB=maxA;
+            maxA=arr[i];
+        }
+        else if(maxB<arr[i])
+        {
+            maxC=maxB;
+        maxB=arr[i];
+        }
+        else if(maxC<arr[i])
+        maxC=arr[i];
+    }
+    cout<<maxA<<" ";
+     
+    //traverse from remaining elements
+    for(i=k;i<n;i++)
+    {
+        //reset first second and third largest elements
+        //in response to new incoming elements
+        if(maxA<arr[i])
+        {
+            maxC=maxB;
+            maxB=maxA;
+            maxA=arr[i];
+        }
+        else if(maxB<arr[i])
+        {
+            maxC=maxB;
+        maxB=arr[i];
+        }
+        else if(maxC<arr[i])
+        maxC=arr[i];
+         
+        //if the first biggest we earlier found
+        //is matching from the element that
+        //needs to be removed from the subarray
+            if(arr[i-k]==maxA)
+            {
+                //reset first biggest to second and second to third
+                maxA=maxB;
+                maxB=maxC;
+                }
+                cout<<maxA<<" ";
+        }
+}
