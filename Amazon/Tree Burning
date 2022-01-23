@@ -1,1 +1,114 @@
+----------------------------------------------------------------------when any node is the target node---------------------------------------------------------------
+class Solution {
+  public:
+  int maxdepth(Node* root){
+      if(!root)
+      {
+          return 0;
+      }
+      return 1+max(maxdepth(root->left),maxdepth(root->right));
+  }
+    int solve (Node* root, int target, int & ans)
+    {
+        if(!root)
+        {
+            return 0;
+        }
+        if(root->data==target)
+        {
+            ans=max(ans, maxdepth(root->left));
+            ans=max(ans, maxdepth(root->right));
+            return 1;
+        }
+        int val =solve(root->left,target,ans);
+        if(val){
+            ans =max(ans, val+maxdepth(root->right));
+            return val+1;
+        }
+        val=solve(root->right, target, ans);
+        if(val)
+        {
+            ans =max(ans, val+maxdepth(root->left));
+            return val+1;
+        }
+        return 0;
+    }
+    int minTime(Node* root, int target) 
+    {
+        // Your code goes here
+        int ans=0;
+        solve(root,target,ans);
+        return ans;
+    }
+};
+
+
+
+
+
+----------------------------------------------------------------------------when leaf node is the target node always --------------------------------------------------------
+struct info {
+  int l;
+  int r;
+  bool contains;
+  int time;
+  
+  info(){
+      l=0;
+      r=0;
+      time=-1;
+      contains=false;
+  }
+};
+class Solution {
+  public:
+    info solve (Node* root, int target, info& out, int& ans){
+        if(!root){
+            return out;
+        }
+        if(root->left == NULL && root->right==NULL)
+        {
+            if(root->data == target){
+                out.contains=true;
+                out.time=0;
+            }
+            return out;
+        }
+        info leftout;
+        solve(root->left, target,leftout, ans );
+        info rightout;
+        solve(root->right, target, rightout, ans);
+        
+        out.time=(root->left && leftout.contains) ? 1+leftout.time : -1 ;
+        if(out.time == -1)
+        {
+            out.time=(root->right && rightout.contains) ? 1+rightout.time : -1;
+            
+        }
+        
+        out.contains =((root->left && leftout.contains)||(root->right && rightout.contains));
+        
+        out.l=!(root->left) ? 0 : 1+max(leftout.l,leftout.r);
+        out.r=!(root->right) ? 0 : 1+max(rightout.l, rightout.r);
+        
+        if(out.contains){
+            if(root->left && leftout.contains){
+                ans=max(ans, out.time+out.r);
+            }
+            if(root->right && rightout.contains){
+                ans=max(ans, out.time+out.l);
+            }
+        }
+       
+        
+    }
+    int minTime(Node* root, int target) 
+    {
+        // Your code goes her
+     int ans=0;
+     info out;
+     solve(root, target, out, ans);
+     return ans;
+ }
+};
 
