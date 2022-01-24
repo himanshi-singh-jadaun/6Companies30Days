@@ -1,1 +1,49 @@
-
+class Solution
+{
+    public:
+    //Function to find unit area of the largest region of 1s.
+    int area;
+    void dfs(vector<vector<int>>& grid,int x , int y )
+    {
+        if(x<0 || y<0 || x>=grid.size() || y>=grid[x].size())
+        {
+            return;
+        }
+        if(grid[x][y]==1)
+        {
+            grid[x][y]=0;
+            area++;
+            dfs(grid,x+1,y+1);
+            dfs(grid,x-1,y+1);
+            dfs(grid,x+1,y-1);
+            dfs(grid,x-1,y-1);
+            dfs(grid,x,y+1);
+            dfs(grid,x+1,y);
+            dfs(grid,x,y-1);
+            dfs(grid,x-1,y);
+            
+        }
+    }
+    int findMaxArea(vector<vector<int>>& grid) {
+        // Code here
+     
+        int n=grid.size();
+        int m=grid[0].size();
+        int c=0;
+        int tt=0;
+        for(int i=0;i<n;i++)
+        {
+         
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]==1)
+                {    area=0;
+                    dfs(grid,i,j);
+                     tt=max(area,tt);
+                }
+            }
+           
+        }
+        return tt;
+    }
+};
