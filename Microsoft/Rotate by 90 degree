@@ -1,1 +1,16 @@
+void rotate(int n,int a[][n])
+{
+    //code here
+    for(int x=0; x<n/2;x++)
+    {
+        for(int y=x; y<n-x-1;y++)
+        {
+            int t=a[x][y];
+            a[x][y]=a[y][n-1-x];
+            a[y][n-1-x]=a[n-1-x][n-1-y];
+            a[n-1-x][n-1-y]=a[n-1-y][x];
+            a[n-1-y][x]=t;
+        }
+    }
+}
 
