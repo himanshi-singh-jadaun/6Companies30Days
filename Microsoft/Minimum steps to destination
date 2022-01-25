@@ -1,1 +1,43 @@
+class Solution{
+public:
+    int minSteps(int D){
+        // code here
+        int target = D;
+        int sum=0 ; 
+        int step=0;
+        
+        while((sum<target) || (sum-target)%2!=0)
+        {
+            step++;
+            sum+=step;
+        }
+        return step;
+    }
+};
 
+
+
+
+-------------------------------------------------------------------Recursion -------------------------------------------------------------------
+class Solution{
+public:
+int dp[100001]
+    int solve(int D,int source, int step)
+    {
+        if(abs(source) > D)
+        {
+            return INT_MAX;
+        }
+        if(abs(source)==D)
+        {
+            return step;
+        }
+       int op1 =  solve(D,source+step+1,step+1 );
+       int op2= solve(D, source-step-1,step+1);
+        return min(op1,op2);
+    }
+    int minSteps(int D){
+        // code here
+        return solve(D, 0, 0);
+    }
+};
