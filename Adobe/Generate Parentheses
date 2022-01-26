@@ -1,1 +1,29 @@
+class Solution
+{
+    public:
+    void solve(int n ,int open, int close , string s, vector<string>& v)
+    {
+        if(open==n && close==n)
+        {
+            v.push_back(s);
+            return ;
+        }
+        if(open<n)
+        {
+            solve(n,open+1,close, s+"(",v);
+        }
+        if(close<open)
+        {
+            solve(n, open, close+1, s+")", v);
+        }
+        
+    }
+    vector<string> AllParenthesis(int n) 
+    {
+        // Your code goes here 
+        vector<string>v;
+        solve(n,0,0,"",v);
+        return v;
+    }
+};
 
