@@ -1,1 +1,35 @@
-
+class Solution{
+    public:
+    long long int dp[1001][1001];
+    long long int mod = 1000000007;
+    long long int solve(int sum , int power, int base)
+    {
+        if(sum==0)
+        {
+            return 1;
+        }
+        if(base> sum)
+        {
+            return 0;
+        }
+        if(dp[sum][base]!=-1)
+        {
+            return dp[sum][base]%mod;
+        }
+        long long int result = pow(base,power);
+        if(result <= sum )
+        {
+            dp[sum][base]=solve(sum-result, power,base+1)+solve(sum,power, base+1);
+            return dp[sum][base]%mod;
+        }else{
+            dp[sum][base]=0;
+            return dp[sum][base]%mod;
+        }
+    }
+    int numOfWays(int n, int x)
+    {               
+        // code here
+        memset(dp,-1,sizeof(dp));
+        return solve(n,x,1);                                    
+    }
+};
