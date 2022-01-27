@@ -1,1 +1,55 @@
-
+class Solution{
+    public:
+    class element{
+        public:
+        
+      int value;
+      int index;
+      int row;
+      element(int v, int i , int r)
+      {
+          value=v;
+          index=i;
+          row=r;
+      }
+    };
+    struct comp
+    {
+      bool operator ()(element a,element b)
+      {
+          return a.value>b.value;
+      }
+    };
+    pair<int,int> findSmallestRange(int KSortedArray[][N], int n, int k)
+    {
+          //code here
+          priority_queue<element,vector<element>,comp>pq;
+          int mx=INT_MIN, range=INT_MAX;
+          pair<int,int>ans;
+          for(int i=0;i<k;i++)
+          {
+              element e(KSortedArray[i][0],0,i);
+              pq.push(e);
+              mx=max(mx,KSortedArray[i][0]);
+          }
+          while(pq.size()==k)
+          {
+              element cur=pq.top();
+              pq.pop();
+              int currentrange=mx-cur.value;
+              if(range>currentrange)
+              {
+                  range=currentrange;
+                  ans=make_pair(cur.value,mx);
+              }
+              if(cur.index==n-1)
+              {
+                  break;
+              }
+              element e(KSortedArray[cur.row][cur.index+1],cur.index+1,cur.row);
+              pq.push(e);
+              mx=max(mx,KSortedArray[cur.row][cur.index+1]);
+          }
+          return ans;
+    }
+};
