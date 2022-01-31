@@ -1,1 +1,40 @@
-
+ int minSwaps(vector<vector<int>>& grid) {
+        vector<int>v;
+        
+        for(int i=0;i<grid.size();i++){
+            int j=grid.size()-1;
+            int count=0;
+            while(j>-1 && grid[i][j]==0){ 
+               count++;
+                j--;
+            }
+            v.push_back(count);
+        }
+        
+        int pos=0;
+        int ans=0;
+int index;
+        while(pos<v.size()){
+            int need=grid.size()-pos-1; 
+            if(v[pos]<need){
+              index=-1;
+                for(int i=pos+1;i<grid.size();i++){
+                    if(v[i]>=need){
+                        index=i;
+                        break;
+                    }
+                }
+                if(index==-1)return -1;
+                else{
+                    ans+=index-pos;
+                    int temp=v[index];
+                    for(int k=index;k>pos;k--)v[k]=v[k-1];
+                    v[pos]=temp;
+                }
+            }
+            pos++;
+            
+            
+        }
+        return ans;
+    }
