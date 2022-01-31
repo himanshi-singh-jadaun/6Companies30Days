@@ -1,1 +1,56 @@
-
+int getNum(string s)
+{
+    int ans=0;
+    for(int i=0;i<s.length();i++)
+    {
+        ans=ans*10+(s[i]-'0');
+    }
+    return ans;
+}
+int missingNumber(const string& str)
+{
+    // Code here
+    for(int len=1;len<=6;len++)
+    {
+        string temp ="";
+         int i=0;
+         int l =len;
+         while(i<str.length() && l--)
+         {
+             temp+=str[i++];
+         }
+         int prev=getNum(temp);
+         int c=0;
+         int ans ;
+         bool flag=false;
+         int j=i;
+         temp="";
+         while(j<str.length())
+         {
+             temp+=str[j++];
+             if(prev+1==getNum(temp))
+             {
+                 prev=getNum(temp);
+                 temp="";
+                
+             }else if (prev+2==getNum(temp))
+             {
+                c++;
+                 ans=prev+1;
+                 prev=getNum(temp);
+                 temp="";
+                 
+             }
+             else if(prev <getNum(temp))
+             {
+                flag=true;                 
+             }
+         }
+         if(c==1 && !flag)
+         {
+             return ans;
+         }
+    }
+    return -1;
+    
+}
