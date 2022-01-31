@@ -1,1 +1,44 @@
+/**
+ * // This is the MountainArray's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class MountainArray {
+ *   public:
+ *     int get(int index);
+ *     int length();
+ * };
+ */
 
+class Solution {
+public:
+    int findInMountainArray(int target, MountainArray &mountainArr)     {
+        auto peak =0, r=mountainArr.length()-1;
+        while(peak<r)
+        {
+            auto m=peak+(r-peak)/2;
+            if(mountainArr.get(m) > mountainArr.get(m+1))
+            {
+                r=m;
+            }else{
+                peak=m+1;
+            }
+        }
+        auto i=solve(mountainArr,target,0,peak);
+        return (i!=-1) ? i : solve(mountainArr,target,peak+1,mountainArr.length()-1,false) ;
+    }
+    
+    int solve (MountainArray &mountainArr , int t, int l , int r ,bool asc=true){
+        while(l<=r)
+        {
+            auto m=l+(r-l)/2;
+            auto val =mountainArr.get(m);
+            if(val==t)return m;
+            else if(asc==val<t)
+            {
+                l=m+1;
+            }else{
+                r=m-1;
+            }
+        }
+        return -1;
+    }
+};
