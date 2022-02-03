@@ -1,1 +1,39 @@
-
+class Solution{
+  public:
+    vector<int> find3Numbers(vector<int> arr, int N) {
+        // Your code here
+        vector<int>v;
+        if(arr.size()<3)
+        {
+            return v;
+        }
+        int min=arr[0];
+        int maxseq=INT_MAX;
+        int storemin=min;
+        for(int i=1;i<N;i++)
+        {
+            if(min==arr[i])
+            {
+                continue;
+            }
+            else if(arr[i]<min)
+            {
+                min=arr[i];
+                continue;
+            }
+            else if(maxseq>arr[i])
+            {
+                maxseq=arr[i];
+                storemin=min;
+            }
+            else if (arr[i]>maxseq)
+            {
+                v.push_back(storemin);
+                v.push_back(maxseq);
+                v.push_back(arr[i]);
+                return v;
+            }
+        }
+    
+    }
+};
