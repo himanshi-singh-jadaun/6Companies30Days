@@ -1,1 +1,32 @@
-
+class Solution {
+public:
+    int solve(vector<int>&piles, int start, int end, vector<vector<int>>&dp , int f)
+    {
+        if(start>end)
+        {
+            return 0;
+        }
+        if(dp[start][end]!=-1)
+        {
+            return dp[start][end];
+        }
+        if(f)
+        {
+            int op1=solve(piles,start+1,end,dp, 0)+piles[start];
+            int op2=solve(piles, start,end-1,dp,0)+piles[end];
+            
+            dp[start][end]=max(op1,op2);
+        }else{
+            int op1=solve(piles,start+1,end,dp,1)-piles[start];
+            int op2=solve(piles,start,end-1,dp,1)-piles[end];
+            
+            dp[start][end]=min(op1,op2);
+        }
+        return dp[start][end];
+    }
+    bool stoneGame(vector<int>& piles) {
+       vector<vector<int>> dp(piles.size(),vector<int>(piles.size(),-1));
+        
+        return solve(piles,0,piles.size()-1, dp, 1);
+    }
+};
