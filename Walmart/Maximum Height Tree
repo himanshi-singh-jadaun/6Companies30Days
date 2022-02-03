@@ -1,1 +1,10 @@
-
+class Solution{
+public:
+    int height(int N){
+        // code here
+        int x = sqrt(2*N);
+        if(N < (x*(x + 1))/2)
+            x--;
+        return x;
+    }
+};
